@@ -1,0 +1,2336 @@
+Prerequisites of Learning JEE.
+1 Basics Of OOPS.
+2 Inheritence.
+3 Polymorphism, specially interfaces and abstract class.
+4 Exception handeling.
+
+#Java Plartforms
+
+    There are broadly 3 version of Java and Java Applications.
+    a - Java Standard Edition - Using Jse Desktop applications are developed.
+    b - Java Enterprise Edition - using Jee internet or web applications are developed.
+    c - Java Micro Edition - using Jme Mobile applications are developed.
+
+#Java Enterprise Edition 
+
+    a - Java Enterprise Edition is renamed to Jakarta Enterprise Edition.
+    b - It is a Java based Plartform used for developing secure and scalable Enterprise / Web Applications.
+    c - In simple words it is a branch of java that allows programmer to develop applications which run on Server Machines.
+
+#Web Server 
+
+    a - As we know that a Web Application which runs on the internet recieves number of requests from client (browser).
+    b - So there should be a piece of Software which recieves these all the requests and properly handle them.
+    c - So this piece of Software is called Web Server.
+
+    1 - So Web Sever is a programm which runs on the sever machine and : 
+        a - remains connected to the internet 24 * 7.
+        b - recieves the request for web application from client.
+        c - passes this request to the appropriate web application.
+        d - executes the web application.
+        e - recieves back the response.
+        f - sends back this response to client.
+    
+    2 - There are so many java based web servers but some of the popular web servers are : 
+        a - Apache Tomcat
+        b - Glassfish
+        c - Weblogic
+        d - Websphere
+        e - JBoss.
+
+#JDBC
+    1 - Unofficially full form of JDBC is Java Database Connectivity.
+    
+    2 - Technical ans : JDBC is an Applications Programmable Interface which is used to connect Java based Programms to Relational Databases.
+
+    3 - Why JDBC : JDBC programms are Plartform and Vendor independent.
+
+    History and Editions of JDBC 
+
+    a - JDBC is maintained by JavaSoft , a sister concern of Oracle.
+    b - JDBC 1.0 is released with JDK 1.1.
+    c - In 2006 JDBC 4.0 is released with Java 6.
+    d - Java 9 includes latest version of JDBC which is JDBC 4.3.
+
+    #How JDBC maintains the connection to the Database.
+
+    1 - JDBC communicates to Database using a special set of classes called DRIVER CLASSES.
+    2 - These classes perform the real communication with the database.
+    3 - Further to manage these Driver classes JDBC provides another Top Level class called DRIVER MANAGER.
+    4 - One DriverManager is used to Manage a set of all Driver Classes of Different Different Databases.
+ 
+    #Types of JDBC Driver classes.
+
+        There are 4 types of Driver classes.
+
+        a - JDBC-ODBC Bridge Driver Classes.
+        b - Native Driver Classes.
+        c - Network Api Driver Classes.
+        d - Pure Java Driver Classes.
+
+        a - JDBC-ODBC Bridge Driver Classes
+            1 - JDBC-ODBC bridge driver classes used ODBC driver classes to connect to the DB.
+            2 - ODBC driver classes stands for Open Database Connectivity classes is a microsoft technology.
+            3 - ODBC driver classes converts the JDBC method calls into ODBC function calls.
+            4 - Sun provides JDBC-ODBC driver classes inside a package sun.jdbc.odbc.JdbcOdbcDriver.
+
+            #Advantages.
+
+            a - Can be used to connect with variety of databases.
+            b - No installation required as it comes bundled with JDK.
+
+            #Disadvantages.
+
+            a - This is the slowest Driver.
+            b - Since JDBC-ODBC driver classes is a technology of Microsoft tha's why it can only run on windows platform.
+            c - It only supports the basic sql types but doesn't support advanced types like BLOB and CLOB etc.
+
+        b - Native Driver Classes
+            1 - Native Driver Classes use Client Side Libreries of the DB.
+            2 - Native Drives classes converts the JDBC method calls into native calls of the Database.
+
+            #Advantages.
+            1 - This architecture eliminated the need of ODBC drive classes.
+            2 - Directly calls to client side Libreries shipped by database vendor.
+
+            #Disadvantages
+            1 - This is not a pure Java Solution.
+            2 - It is faster than JDBC-ODBC Bridge Driver classes but still slow because it uses JNI technology for native calls.
+
+        c - Network Driver Classes 
+            1 - It is a Java Driver.
+            2 - It sends the JDBC method calls to Intermidiate Server.
+            3 - Then Intermidiate Sever connects to Database on the behalf of JDBC driver.
+            4 - Then Applications Sever converts JDBC calls into Vendor-Specific-Database-Protocall directly or indirectly.
+
+            #Advantages.
+            a - It is 100% Java Solution.
+            b - No client side Libreries are used here because application server that can perform many tasks like auditing, load balancing, logging etc.
+            
+            #Disadvantages
+            a - Although it is a Java Solution but Database Vendor will not like this approach as they will have to rewrite the Client Side Libreries which 
+                all were in C/C++.
+            b - In addition , this doesn't increase the architecture efficiency as still we are in 3 tier architecture.
+
+        d - Pure Java Driver classes.
+            1 - It is called a Thin Driver or Vendor Specific Driver.
+            2 - This is because Pure Java Driver directly converts the JDBC calls into Vendor Specific Database Protocall , it doesn't use any 
+                kind of Client Side Libreries or no Application Server or Intermidiate server.
+            3 - Moreover it is fully written in Java Language.
+
+            #Advantages 
+            a - No middle Ware is needed while connecting to DB.
+            b - Better Performance.
+        
+            #Disadvantages
+            a - Pure Java Driver Classes are Dependent on Dabatabse.
+            b - There is a Sepreate Driver for each database.
+
+#Steps required for Connectivity.
+
+    1 - There are 7 Setps to connect any java application with database in java using JDBC...
+
+    a - Import the required packages.
+    b - Load and Register the driver class.
+    c - Obtain the Connection.
+    d - Obtain the Statement.
+    e - Execute Queries.
+    f - Process the Result.
+    g - Close the Connection.
+    
+
+    a - Import the required packages.
+        1 - For using JDBC we need to either import java.sql or javax.sql or we can import both as per the requirements.
+
+        2 - JDBC API is comprised of two packages first one is java.sql and second one is javax.sql.
+
+        3 - details about java.sql package.
+
+            java.sql package contains the entire JDBC API that send SQL statements to the Relational Database and retrieves the result of those SQL statements.
+
+        4 - details about javax.sql package.
+        
+            javax.sql package contains the extension of JDBC Api.
+            javax.sql package's interfaces and classes provides some new functionalities such as CONNECTION POOLING and DISCONNECTED ARCHITECTURE.
+
+    b - Load and Register the driver classes.
+        1 - We must Register the driver classes before we use it.
+        2 - Registering the Driver class is a process in which Database's Driver Class is loaded into the memory.  
+        3 - We need to register the driver class only one in our application.
+
+        Method used for Loading and Registering the Driver class.
+        
+            forName() - forName() is a method of a class called Class , and used for loading and Registering Database's Driver class at runtime.
+                        it's prototype is this : public static Class forName(String driver) throws ClassNotFoundException.
+                        example : Class.forName("com.mysql.cj.jdbc.Driver");
+                
+    c - Obtain Connection.
+        1 - getConnection() of DriverManager class is used to obtain the connection to the DB.
+        2 - syntax : public static Connection getConnection(String url) throws SQLException.
+                     public static Connection getConnection(String url , String username, String pwd) throws SQLException.
+                     example : Connection con = DriverManager.getConnection(url , username , pwd);
+
+        3 - Connection : It is an interface availible in java.sql.package.
+
+    d - Obtain Statement.
+        1 - To obtain the Statement we call a method called createStatement() of Connection interface.
+        2 - createStatement() returns an object of Statement interface.
+        3 - syntax : public Statement createStatement() throws SQLException.
+        4 - example : Statement st = con.createStatement();
+
+        4 - Statement - It is an interface availible in java.sql package and responsible for executing Queries to the DB.
+
+    e - Execute Query.
+        1 - For executing query we use executeQuery() of Statement interface.
+        2 - executeQuery() executes the specified query and retuns the object of ResultSet which is used to get all the records fetched by query.
+        3 - syntax : public ResultSet executeQuery(String SQL) throws SQLException.
+
+        4 - ResultSet : ResultSet is an interface presented in java.sql package.
+                        ResultSet object maintains a cursor pointing to it's current row data, initially it is pointed before the first row and using the next()
+                        it moves to the next row. next() returns false when there is no other row in the ResultSet object. next() can be used in while loop to 
+                        iterate over ResultSet object.
+
+    f - Close the Connection.
+        1 - For closing connection to DB we call method close() of Connection object.
+        2 - By closing Connection object , Statement object and ResultSet object are automatically closed.
+        3 - syntax : public void close() throws SQLException.
+
+#Executing Non-Select Queries
+    a - For executing non-select Queries we use executeUpdate() of Statement interface.
+    b - syntax : public int executeUpdate(String sql) throws SQLException.
+    c - This method takes any non-select query and returns the number of rows affected by that query.
+
+#Dynamic SQL 
+    a - Dynamic Sql query is a query which contains Dynamic values that is supplied at run time.
+    b - example : we want to insert records to DB by accepting values from user.
+
+    To Make Dynamic SQL query we have two options.
+
+    1 - we use Statement and using String Concatination we create Dynamic Sql Query.
+    2 - we use PreparedSatement.
+
+    a - Drawbacks of Statement and using String Concatination
+        1 - This is very difficult because we have to be very carefull for quotes.
+        2 - It is a programmer responsibility to handle Date Conversion.
+        3 - It is prone to a very famous SQL attack called SQL INJECTION.
+
+    b - PreparedStatement : It is a child interface of Statement.
+                            It gives us added functionalities with a couple of Advantages over a Generic Statement Object.
+                            To create PreparedStatement object we call a method called prepareStatement() of Connection interface.
+
+                            example : 
+                                PreparedStatement ps = null;
+                                ps = con.prepareStatement("insert into books values(?, ?, ?, ?)");
+
+                            Here ? are called placeholders.
+                            We must supply the values of these placeholders before we execute this sql query.
+                            setXXX() are used to pass value of placeholders.and if we forget to pass any value then SQLException will be generated.
+                            setXXX() takes two parameters first is postion of placeholder and second is Value for that.
+                            The first placeholder's position is 1.
+
+                            example : ps.setInt(1 , 101);
+
+    #Difference between Statement and PreparedStatement.
+    1 : Statement is an Interface which is used to execute Normal or Static Sql Queries , PreparedStatement is a child Interface of Statement interface which is used 
+        to execute Dynamic SQL Queries.
+    2 : Statement interface is preferred when we have to execute a query only once , and PreparedStatement interface is prefferred when we have to execute a query for 
+        multiple times.
+    3 : We can not pass parameters to SQL query using Statement interface , and using PreparedStatement interface we can pass parameters to SQL query at Run Time.
+    4 : Statement interface is used to execute DDL sql Queries like create , update and drop , and PreparedSatement interface is used to execute DML like insert, update.
+    5 : Statement interface is slower than PreparedSatement interface.
+
+
+#Updatable and Scrollable ResultSet.
+    a - By default which ResultSet object we create that can only move in Forward Direction , And this ResultSet object doesn't allow us to make any kind of changes
+        on the records stored in ResultSet object.
+    b - So if we want to change this behaviour then we will have to change it's type Scrollabality and Updatability.
+    c - To change this behaviour we call the same method called createStatement() with these parameters.
+
+        public Statement createStatement(int Scrollabality, int Updatability) throws SQLException.
+    
+    ResultSet Scrollabality
+
+        1 - ResultSet.TYPE_FORWARD_ONLY
+        2 - ResultSet.TYPE_SCROLL_INSENSITIVE
+        3 - ResultSet.TYPE_SCROLL_SENSITIVE
+
+        1 - ResultSet.TYPE_FORWARD_ONLY : The cursor can only move in the FORWARD direction.From 1st row upto LAST row.
+        2 - ResultSet.TYPE_SCROLL_INSENSITIVE : The cursor can move in FORWARD and BACKWARD direction , and ResultSet is insensitive to the changes made by 
+                                                other users to database after the ResultSet is created.
+        3 - ResultSet.TYPE_SCROLL_SENSITIVE : The cursor can move in FORWARD and BACKWARD directions, and Result is sensitive to the changes made by other user 
+                                              to the database after the ResultSet is create.
+
+    ResultSet Updatability
+
+        1 - ResultSet.CONCUR_READ_ONLY : Creates READ only ResultSet, This is by default.
+        2 - ResultSet.CONCUR_UPDATABLE : Creates UPDATABLE ResultSet.
+
+    ResultSet Methods
+        
+        1 - public void beforeFirst() throws SQLException : This method moves the cursor to before First Row.
+
+        2 - public void afterLast() throws SQLException : This method moves the cursor after the Last Row.
+        
+        3 - public void first() throws SQLException : This method moves the cursor to the First Row.
+        
+        4 - public void last() throws SQLException : This method moves the cursor to the Last Row.
+        
+        5 - public boolean absolute(int row) throws SQLException : This method moves the cursor to the specified Row.
+        
+        6 - public boolean relative(int row) throws SQLException : This method moves the cursor specified number of Rows FORWARD or BACKWARD from where it is currently
+                                                                    pointing.
+
+        7 - public boolean previous() throws SQLException : This method moves the cursor to the Previous Row.
+
+        8 - public int getRow() throws SQLException : This method returns the Row Number to which cursor is pointing.
+                            
+    
+#Retriving Dates From Database.
+    1 - For Retriving Dates from database we call a method called getDate() of ResultSet object.
+    2 - public Date getDate(int columnIndex) throws SQLException OR public Date getDate(String colName) throws SQLException.
+    3 - This method return object of java.sql.Date.
+    4 - By default we get date in form of "YYYY - MM - DD". Which is not so readable.
+    5 - Now to make it readable we use a class called SimpleDateFormat availible in java.text package.
+    
+    SimpleDateFormat class : 1 - SimpleDateFromat is a class availible in java.text package.
+                             2 - This class is used to format the date and time.
+                             3 - Has a following constructor
+
+                                 public SimpleDateFormat(String pattern)
+
+                            4 - This pattern is date format like "YYYY-MM-DD" or "YYYY/MM/DD" in which we want to convert the date.
+
+                            5 - This class has a method called format()
+
+                                public String format(Object) - This method takes object of either java.sql.Date OR java.util.Date and converts that object into 
+                                                               String reperesentation containing date in specified format.
+
+                            6 - This class has one more method called parse()
+
+                                public Date parse(String) throws ParseException - This method takes String reperesentation of date and returns java.util.Date object.
+
+
+    6 - In JDBC  we need to make these changes.
+        a - Create an object of SimpleDateFormat with desired pattern.
+        b - Retrieve java.sql.Date using getDate() of ResultSet object.
+        c - Now pass java.sql.Date object to format() and format() will return a String containing date in the specified format.
+
+
+#Inserting Date in database.
+    1 - Accept a date as String in a particular format.
+    2 - Create a SimpleDateFormat class object using the same format in which input has been taken.
+    3 - Pass that date in form of String to parse() and this will return java.util.Date class object.
+    4 - Now convert java.util.Date into miliseconds using getTime() of java.util.Date object.
+    5 - Use java.sql.Date() constructor and pass miliseconds to that constructor and it will return java.sql.Date object.
+    6 - Then call method setDate() of PreparedSatement and pass java.sql.Date object to it, it will convert java.sql.Date to database date format and inserts that.
+
+#Inserting Images.
+    1 - Create a column in a table having BLOB data type.
+    2 - Create File object and pass image as an argument.
+    3 - Create FileInputStream Object using File Object.
+    4 - Call the method SetBinaryStream() of PreparedSatement which will replace placeholder by image object.
+    
+        prototype : public void setBinaryStream(int pos, InputStream obj, int size) throws SQLException.
+
+    5 - finally call the method executeUpdate() to insert image in DB.
+
+
+#Retriving Images.
+    1 - Create ResultSet Object holding images fetched from DB.
+
+    2 - Then call the method getBlob() of ResultSet.
+
+        prototype : public Blob getBlob(int) throws SQLException.
+
+    3 - One we have Blob object then we have to convert it into byte array by calling a method getBytes().
+
+        prototype : public byte[] getBytes(int pos, int size) throws SQLException. 
+
+    4 - Create FileOutputStream object and connect with file where image has to be saved.
+
+    5 - Call the method write() of FileOutputStream so that image gets saved.
+
+    6 - Now call the method close() of FileOutputStream so that images gets saved in Hard Disk.
+
+#History 
+    a - In traditional JDBC, if we have to perform any Operation with the DB, then we must send Sepreate request to the DB.
+    
+    b - So if there are N number of transactions then we must send N number of Request to the DB.
+
+    c - And finally this cause a poor Performance.
+
+    d - There is also a possibility of getting inconsistent result from DB due to Interrelated Transactions.
+
+    e - Number of network round trips are also increased.
+
+    f - To remove these issues we use Batch Processing.
+
+    g - Rather than sending one query at a time we can send a whole bunch of queries to DB, which will definetly imrove the performance of our app.
+
+    h - It leads to Consistency to the DB.
+
+    i - Number of Network Round Trips are Reduced.
+
+    j - Stpes required to execute Batch Update...
+
+        1 - Create Statement object using createStatement().
+
+        2 - Set Auto Commit to false using setAutoCommit() of Connection object.
+
+        3 - Add as many as SQL Statements you like into batch using addBatch() of Statement.
+
+        4 - Now call the method executeBatch() to execute that whole batch. 
+
+        5 - Finally Commit all the changes by calling commit() of Connection.
+
+    k - Steps required to execute Batch Processing on PreparedStatement.
+
+        1 - Create SQL statements with Placeholders.
+
+        2 - Create PreparedStatement object using prepareStatement() by passing SQL statement.
+
+        3 - Set Auto Commit False by calling a method setAutoCommit(false) of Connection.
+
+        4 - Replace all the placeholders by calling appropriate Setters.
+
+        5 - Now add that SQL statement into batch by calling addBatch().
+
+        6 - Now call executeBatch() to execute the whole batch.
+
+        7 - finally Commit all the Changes by calling commit() of Connection.
+
+
+    l - Transaction Management
+
+        a - The term Transaction Management in Database Programing defines a situation in which there is set of multiple SQL statements that are to be executed to the 
+            DB.
+            So if one is executed and commited to DB then all the other Statements must also be executed and commited.
+            and if there is one not executed and commited so none of the other must be executed or commited.
+
+        b - When a Connection object is created so By Default it is set to auto commit mode i.e. after each SQL statement auto commit command will automatically
+            generated.
+
+#Disconnected architecture
+
+    1 - The Database programing which we have dont till now has explicitely established connection to the DB server and prepared statement and executed.
+
+    2 - When any of these activies takes place the connection to DB continously remains open.
+
+    3 - But for web application this kind of programming is not considered benificial keeping this in mind Java allows us Disconnected Architecture.
+
+    4 - The main difference between these both is that in Disconnected Architecture the connection is opened for very small amount of time and as soon as result 
+        is fetched connection gets terminalted automatically.
+
+    5 - To establish the connection and fecthing the resultset a special interface is used called RowSet availible in javax.sql package.
+
+    6 - RowSet interface extends to ResultSet interface and further extended by CachedRowSet interface.
+
+    7 - CachedRowSet interface is implemented by a Special class called CachedRowSetImpl.
+
+    8 - CachedRowSetImpl class connects to the DB, executes the query and fetchs the result and automatically closes the connection.
+
+    9 - When we use CachedRowSetImpl then we can easily avoid the Connection, Statement and ResultSet objects , because the entire process from connetion to DB and 
+        setting the username and password then fetching result is handled by the object of CachedRowSetImpl.
+
+
+    10 - Methods used for establishing connection...
+
+        a - public void setUrl(String) , b - public void setUsername(String) , c - public void setPassword(String), these all the methods are used.
+
+    11 - public void setCommand(String) - This method is used to set the SQL query to be sent to DB.
+
+    12 - public void execute()...
+
+        This method performs the following activities.
+
+        a - It Opens the Connection.
+
+        b - It prepares the query and executes it.
+
+        c - It fetches the Result and stores the result in internal ResultSet of CachedRowSetImpl.
+
+        d - It closes the Connection.
+
+#Updating CachedRowSet
+
+    a - In order to update CachedRowSet all the steps are same as scrollable/updateble ResultSet.
+
+    b - However in Disconnected Architecture we are not connected with original data source while CachedRowSet being updated that's why after updating CachedRowSet 
+        an extra method has to be called to make changes on original database.
+
+    c - Firstly we call a method updateXXX() to update value of a particular column.
+
+    d - Now we call the method updateRow() before the cursor moves to next row.
+
+    e - Now call method acceptChanges().
+
+        This method re-opens conntection to the database and update the underlying data source.
+
+#Inserting Records In CachedRowSet.
+
+    a - A method moveToInsertRow() is called which will move the cursor to an special position which allows us to insert a new row.
+
+    b - Update the data in the Newly added row.
+
+    c - Now call the method insertRow() so that the new row is finally inserted in CachedRowSet object.
+
+    d - Now call the method moveToCurrentRow() which will take the cursor to the position where it was pointing before insertion of new row.
+
+    e - Now call the method acceptChanges() to update the original database.
+
+
+# Deleting Row from CachedRowSet
+
+    1 - For deleting a row from CachedRowSet we simply call a method called deleteRow().
+
+    2 - And finally we call acceptChanges() to make change on database.
+
+# SERVLET
+
+    1 - A servlet is server-side application , which runs on the server side of Web Application.
+
+    2 - Why is Servlet required.
+
+        a - Servlet is required to provide DYNAMIC BEHAVIOUR to our web applications.
+
+        b - As we know that HTML can generate static web pages but it can't generate the Dynamic Web Pages, Html can be used to generate USER INTERFACE ELEMENTS and 
+            it can take INPUT DATA from user , but after taking input data html doesn't know that what to do next with this data , how to process it and how to generate 
+            the next response.
+
+        c - This is where Servlet comes into the picture.
+
+    3 - Servlet is a Piece of Java code which basically follows these steps.
+
+        a - Servlet lives on the Server.
+
+        b - Servlet is called by Html Page.
+
+        c - Servlet fetches the data sent by the Html page.
+
+        d - Servlet processes this data.
+
+        e - Servlet generates the response as an html file.
+
+        f - Servlet returns this response.
+
+        ***This whole Process is called Dynamic Page Generation which is the Main Responsibility of Servlet***
+
+    4 - Servlet Container
+
+        a - Servlets don't have the main() like Normal Java Programm they are Totally Under the controll of Another Java Based Application called ServletContainer.
+
+        b - When the WebServer gets REUQEST to a Servlet so it doesn't Directly Handover this Request to the Required Servlet firstly Web Server Transfers this 
+            Request to Servlet Container and Servlet Container is Responsible to forward to servlet.
+
+        c - It is "Servlet Container" which gives Request to Servlet and takes back Response from it and sends back to client.
+
+        d - Servlet container does not only transfer requests or response rather it is responsible for following purposes.
+
+            1 - Servlet Container is Responsible for managing the Whole LIFE CYCLE of any Servlet.
+
+            2 - Servlet Container is Responsible for Mapping The URL to a particular Servlet.
+
+            3 - Servlet Container is Responsible for ensuring that any URL request has the Correct Access Rights.
+        
+    5 - Steps required to develop a servlet 
+
+        1 - Create a java programm and inherit the Required Interfaces and Classes.
+
+        2 - Override the Necessary Methods.
+
+        3 - Compie the code.
+
+        4 - Create the appropriate Directry Structure under the Web Server.
+
+        5 - Place the .class File.
+
+        6 - Create a file by the name of "web.xml" which is also called as Deployment Discriptor.
+
+        7 - Start the Web Server.
+
+        8 - Open the Browser and Request the Servlet.
+
+    6 - Inherit the required Interface and classes.
+
+        1 - In order to Create Servlet we have to create a public class which inherites to an interface called "Servlet" availible in javax.servlet package.
+
+        2 - This interface has 5 methods.
+
+            a - getServletConfig().
+
+            b - getServletInfo().
+
+            c - init().
+
+            d - service().
+
+            e - destroy().
+        
+            a - getServletConfig() - It returns an Object of ServletConfig interface.
+
+
+                ServletConfig - 1 - ServletConfig is an interface availible in javax.servlet package.
+
+                                2 - ServletConfig interface object is created by Servlet Container before Servlet Container passes the request to a particular 
+                                    Servlet firstly Servlet Container creates an object of ServletConfig which implements all the required methods 
+                                    of ServletConfig interface and then it sends this object with the request to Servlet.
+
+                                3 - Now this object can be very important for any Servlet of web application because of following reasons.
+
+                                    a - It provides a proffessional way for any Servlet to access CONFIGURATION INFORMATIONS from web.xml file.
+
+                                    b - It allows Developers to keep CONFIGURATION INFORMATIONS seperate from code which make web application more flexible,
+                                        maintainble and eaiser to manage.
+
+                                    c - It also allows dynamic Configuration Changes without the need of Code modification , beacuse of this if we change any 
+                                        Configuration Information in future so we don't need to change code of Servlets and recompile it and redeploy it. It is 
+                                        very helpful to scale or maintain the code in production.
+
+                                    d - One of the primary purpose of ServletConfig is to provide access of INITIALIZATION PARAMETERS to servlets defined in web.xml file.
+                                        Initialization Parameters are KEY-VALUE pairs.These Parameters are Specific to Servlet and can vary from one servlet to 
+                                        another.
+
+            b - getServletInfo() - 1 - getServletInfo() provides the impormation related to Servlet purpose, author, version and copyright.
+
+                                   2 - If we want to use this method than we must implement it in our own way.
+
+                                   3 - This method reurns a String object.
+
+            c - init() - 1 - init() is an important method Servlet life cycle.
+
+                         2 - It is called by ServletContainer and Servlet Container passes it an object of ServletConfig.
+
+                         3 - It initializes the servlet it means that it indicates that hey servlet now you are being placed for handeling the request , so whatever
+                             the preparation you wanna do please do now before handeling the actual request. 
+
+                         4 - This method is called only once during the Servlet Life Cycle.
+
+                         5 - The primary porpuse of this method is to perform Necessary Initialization Tasks for Servlet...
+
+                             Tasks like - a - Setup of any Resource.
+                                          b - Establishing the Database Connection.
+                                          c - Loading the Configuration Informations.
+
+                         6 - Once the init() is completed it means that Servlet is initialized properly and can handle the client Request.
+
+            d - destroy() - When the Service is given from any Servlet then Servlet Container calls this method.
+
+            e - service() - 1 - service() is a place where a servlet spends it's most of the time of life.
+
+                            2 - Once the Servlet Container completes execution of init() then service() is called by container.
+
+                            3 - service() is used for hadeling the request and giving back response.
+
+                            4 - service() is a method which runs for each request but all other methods run for only 1 time.
+
+
+# Explain the Servlet Life Cycle.
+
+    1 - The whole Life Cycle of Servlet is controlled by Servlet Container.
+
+    2 - Once the request arrives for a particular Servlet then Servlet Container takes these following steps.
+
+        a - Firstly Servlet Container checks whether an instance of this Servlet is exist or not.
+
+        b - If instance is not exist then Servlet container takes following steps.
+
+            1 - Servlet Container loads the Servlet class.
+
+            2 - Servlet Container Creates an Instance of Servlet class.
+
+            3 - Servlet Container initializes the instance by calling init().
+
+            4 - Servlet Container calls the method service() passing it the Request and Response object.
+
+        c - But if Servlet Instance is already exist then it takes following steps.
+
+            1 - The first 3 steps are not repeated.
+
+            2 - The only method which is called that is service() and for every next request only the service method will be called because an instance is already 
+                created.
+
+        d - At the end if Servlet Container wants to remove Servlet it calles destroy().
+
+
+#Creating Servlet
+
+    1 - Although we can create Our Servlet by implementing the javax.servlet.Servlet interface but this practice is Raerly Followed.
+
+    2 - So for this Java has provided us 2 implementaion classes...
+
+        a - GenericServlet class.
+        b - HttpServlet class.
+
+        a - GenericServlet class - 1 - GenericServlet is an abstract class.
+
+                                   2 - It is an abstract class because it implements to javax.servlet.Servlet interface except the service().
+
+                                   3 - GenericServlet class defines the PROTOCALL INDEPENDENT or HTTP LESS Servlet , However while developing web applications
+                                       we may want to have Http Protocalls so in that case we must exetnd to HttpServlet class instead of GenericServlet class.
+
+                                   4 - Creating the servlet using GenericServlet class is very easy as we have to only provide implementaion of service().
+
+                                   5 - prototype of service()
+
+                                        public void service(ServletRequest request , ServletResponse response) throws ServletException, IOException.
+
+                                   6 - ServletRequest...
+
+                                       a - ServletRequest is a public interface.
+
+                                       b - ServletRequest interface is used to define an object to provide the information related to Client request.
+
+                                       c - ServletRequest interface , object is created by the Servlet container and paassed by Container to service() as 
+                                           an argument.
+
+                                       d - ServletRequest interface provides data including parameters name and values as well as input stream. 
+
+                                       e - Any other interface can inherit to ServletRequest interface and can provide data with some Specific protocalls like Http.
+                                           So like this an interface exists called HttpServletRequest interface which provide Http protocall data.
+
+                                   7 - ServletResponse....
+
+                                       a - ServletResponse is a public interface.
+
+                                       b - ServletResponse is used to define an object which can be used to provide the RESPONSE back to the client.
+
+                                       c - Servlet Container creates an object of ServletResponse interface and passes as an argument to Servlet's service().
+
+                                       d - To Send Binary Data as MIMI response body , use ServletOutputStream (abstract class) object returned by getOutputStream().
+
+                                       e - To send Character Data use PrintWriter (normal class) object returned from getWriter().
+
+                                       f - ServletOutputStream is an abstract class whose instance is created by ServletContainer and provided by the method 
+                                           getOutputStream() , so it's instance can be used to write Binary data as response.
+
+    3. Before we compile the programm we must set "servlet-api.jar" file in our classpath , this is because javax.servlet.Servlet interface exists in servlet-api.jar.
+
+    4. And servlet-api.jar file is availible in the lib folder of Tomcat.
+
+    5. assuming that Tomcat is in d drive : 
+
+        so we set the classPath by following command...
+
+            d:\Apache Software Foundation\Tomcat 8.0\lib\servlet-api.jar; . ; %classPath%.
+
+    6. Now Compile the programm.
+
+    7. After compiling the programm , deploy the .class file in server.
+
+        To deploy .class in server we need to take following steps.
+
+        1 - Create an Appropriate Directry Structure.
+
+            Now to create Appropriate Directry Structure we should follow Standard Directry Structure given by Sun.
+
+                a - Create a Root folder with any name.
+
+                b - Under Root folder create sub directry called WEB-INF.
+
+                c - Under WEB-INF two sub directries are required and the are called classes and lib.
+
+                d - Place all the jar files inside lib directry.
+
+                e - Inside classes directry all the servlet's .class files are placed.
+
+                f - All the html , css, js, images, jsp are placed inside Root folder.
+
+                g - Place web.xml file inside WEB-INF directry.
+
+        2 - Create web.xml file.
+
+        3 - place .class file inside your application's classes subdirectry.
+
+#web.xml
+
+1. Java Web Applications use DEPLOYMENT DISCRIPTOR to Map URLS with Servlets.
+
+2. This Deployment Discriptor file is called web.xml , and it is STANDARD file of Java Web Applications.
+
+3. web.xml file Structure looks like....
+
+    <web-app>
+
+        <servlet>
+
+            <servlet-name></servlet-name>
+            <servlet-class></servlet-class>
+        
+        </servlet>
+
+
+        <servlet-mapping>
+        
+            <servlet-name></servlet-name>
+            <url-pattern></url-pattern>
+        
+        </servlet-mapping>
+
+    </web-app>
+
+#HttpServletClass
+
+1. As we all know that most used protocall over the internet in Http Protocall.
+
+2. So Oracle Sun has Provided us a derived class of GenericServlet (abstract class) called HttpServlet(abstract class).
+
+3. HttpServlet class inherits to GenericServlet class and overrides service() and provides some extra protocall specific methods.
+
+4. There are total 7 methods provided by HttpServlet class , and they reperent Specific Http Command.
+
+5. These 7 methods are following...
+
+    a - doGet().
+
+    b - doPost().
+
+    c - doPut().
+
+    d - doDelete().
+
+    e - doHead().
+
+    f - doOptions().
+
+    g - doTrace().
+
+6. Out of these 7 , two methods are very Usefull they are doGet() and doPost() , this is because maximum requests given by client are either GET of POST.
+
+7. The HttpServlet class reads the Http request and determines that is GET or POST or any other , and accordingly calls corresponding method.
+
+8. Important Point - a - While extending to HttpServlet class we must never override the service().
+
+                     b - This is because, HttpServlet class has already overriden service() for us in such a way that first HttpServlet detects the kind of request 
+                     and then calls the required doXXX().
+
+                     c - HttpServlet class is an abstract class but it doesn't contain any abstract method.
+
+                     d - If HttpServlet class doesn't contain any abstract methods so why HttpServlect class has been declared abstract 
+
+                        answer - 1 - This is because None of the doXXX() have been given a PROPER IMPLEMENTATION by HttpServlet class.
+
+                                 2 - They(doXX()) all have the default implementaion of returning Http 405 Not Implemented Error.
+
+                                 3 - Since there is NO PRACTICLE USE of HttpServlet class because if develpor uses HttpServlet class so he would get error only,
+                                     that's why JEE Desiners have made HttpServlet class as abstract.
+
+                     e - Now you might think that if Why JEE Desiners haven't declared doXXX() as abstract , if they don't have PROPER IMPLEMENTATION of doXXX().
+
+                        answer - 1 - JEE Desiners thought that if we declare these all the methods as abstract then this will be a PROBLEMATIC CONDITION for 
+                                     Developrs , why ?
+                                     because if these all the methods would have been declared abstract then developers would be FORCED to OVERRIDE ALL these methods,
+                                     and but the BUISNESS REQUIREMENTS only need one of the method among thses doXXX().
+
+                                 2 - So Jee Desiners didn't want to force us to override all the methods which are not needed to implement by buiness logic.
+
+                                 3 - That's why they provided a default implementation and did not declare as abstract.
+
+ 9. LIFECYCLE of HttpServlet class.
+
+    a - The whole life cycle is same as a normal servlet's lefe cycle.
+
+    b - The only difference is that when container calls service() then from inside service() a call for one of the doXXX() will be generated, so if programmer 
+        implemented required doXXX() then programmer's implementaion will be executed but if programmer didn't provide any implementaion so the implementaion 
+        provided by HttpServlet class will run which will cause of an error which is Http 405 Not Implemnted Error.
+
+    c - So if developers use HttpServlet class so definetly they must provide the implementaion of doXXX() methods which are needed by Buisness Logic.
+
+ 10. PROTOTYPE of doGet()
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException.
+
+ 11. HttpServletRequest 
+
+    1 - HttpServletRequest is an interface.
+
+    2 - HttpServletRequest interface inherits to ServletRequest interface.
+
+    3 - Servlet Container creates object of HttpServletRequest and passes this object to service() as an argument.
+
+    4 - HttpServletRequest interface object provides informations related to Client's Request.
+
+    5 - HttpServletRequest is used to get informations related to parameter from client request, information related to attributes also it provides ServletInputStream
+
+ 12. HttpServletResponse
+
+    1 - HttpServletResponse is an interface.
+
+    2 - HttpServletResponse interface inherits to ServletResponse interface.
+
+    3 - HttpServletResponse provides Http Specific functionalities in sending RESPONSE.
+
+    4 - Servlet Container creates an object of HttpServletResponse and passes this object as argument to service().
+
+#DIFFERENCE BETWEEN HttpServlet class and GenericServlet class.
+
+    1 - Generic Servlet class is PROTOCALL INDEPENDENT class it means it doesn't support any PROTOCALL SPECIFIC FEATURE , but HttpServlet class is HTTP PROTOCALL 
+        SPECIFIC class and supports Http protocalls and should be used with Http Protocalls only.
+
+    2 - Generic Servlet has all the methods CONCERETE except service() , service() is declared abstract in GenericServlet , but in HttpServlet there is no abstract 
+        method all the methods are CONCERETE.
+
+    3 - If we use Generic Servlet , so we must implement service() , but if we use HttpServlet then we should not override service() because it is already implemented 
+        by HttpServlet class rather we should override required doXXX() methods.
+
+    4 - GenericServlet class is defined in javax.servlet package and HttpServlet class is defined in javax.servlet.http package.
+
+    5 - GenericServlet is not used now-a-days but HttpServlet class is particularly used for JAVA WEB APPLICATIONS.
+
+#CALLING THE SERVLET THROUGH HTML PAGE 
+
+    1. Till now whatever the servlets we have created , they should be called by user by completely typing Servlet's URL on the Browser Window.
+
+    2. But practically Users firstly come on HTML page and then using a link or form they access to servlets.
+
+    3. In order to achieve this behaviuor we will have to provide an html page to user containg a link to access servlet.
+
+    4. This link can be given in 2 ways...
+
+        a - Using Anchor tag - Using anchor tag and in href attribute we can provide URL of a servlet, but here we should make sure that servlet must contain 
+            doGet() method implementation because GET request is generated using anchor tag.
+
+        b - Using Form tag - Using form tag inside action attribute we can provide URL of servlet and in method attribute we can provide HTTP COMMAND either GET 
+            or POST.
+
+#OBTAINING CLIENT'S INFORMATION.
+
+    1 - Whener the browser generates the request to server resource then along with the request browser passes some information related to client system like 
+        OS-Name , browser version and Client's IP.
+
+    2 - Firstly Browser send these informations to Web-Server then Web-Server passes These informations to Servlet-Container and then Servlet-Container wraps
+        these informations inside objects of ServletRequest and HttpServletRequest objects.
+
+    3 - Now in order to access these informations we need to call methods of ServletRequest or HttpServletRequest objects.
+
+    4 - getRemoteHost() - return CLIENT NAME.
+
+    5 - getRemoteAddr() - returns CLIENT IP.
+
+    6 - getHeaderNames() - returns collection of ENUMERATION of String.
+
+    7 - getContentLength() - returns CONTENT LENGTH.
+
+    8 - getProtocal() - return PROTOCAL name.
+
+    9 - getServerName() - returns SERVER name.
+
+    10 - getServerPort() - returns PORT on which server is running.
+
+    11 - getServletPath() - returns servlet's PATH.
+
+    12 - getMethod() - returns METHOD NAME.
+
+#READING FORM DATA IN SERVLET.
+
+    a - Whenever users clicks on submit then browser send all the input data that user has filled (textbox, checkbox, password)
+        to the server.
+
+    b - At the server end this data is also wrapped inside HttpServletRequest object and for accessing this data in our servlet 
+        we call a method called getParameter();
+
+    c - Prototype of getParameter()
+
+        String getParameter(String).
+
+    d - The argument passed to this method is NAME attribute of input tag and returned value is the value that is filled by USER.
+
+    e - The 3 possibilities
+
+        1 - If user has filled some value then this method returns that VALUE as a String.
+
+        2 - If user has not filled any value then this method returns an EMPTY string.
+
+        3 - But if the name of input controll is given wrong then method returns NULL.
+
+    D - getParameterValues
+
+        1 - If html page contains a list(select controll or multiple attribute set) then all the values which have been selected by the user will be sent to server 
+            under a SINGLE NAME.
+
+        2 - So to access these values we use getParameterValues method.
+
+        3 - prototype 
+
+            String[] getParameterValues(String);
+
+        4 - The argument passed to this method is name of input controlls and returned value is an array of String which contains all values selected by user.
+
+#INITIALIZATION PARAMETER.
+
+    1 - While desgining a web applications there are some DATA ELEMENTS that need to be changed in future.
+
+    2 - ex - 
+    
+        Suppose , our servlet is using COMPANY'S email id , then we can write it in this way , out.println("Contact us on : "+scalive.gmail.com);
+
+    3 - Now suppose that this email id is changes in future then to REFLECT THIS IN OUR SERVLET we need to do following.
+
+        a - Rewrite Servlet's code.
+        b - Recompile it.
+        c - Redeploy it.
+
+    4 - So these above tasks are TIME CONSUMING so to avoid these tasks we use a technique called INITIALIZATION PARAMETERS.
+
+    #CREATING AND READING INITIALIZATION PARAMETER.
+
+        5 - Initialization Parameters are TEXTUAL VALUES coded to the Servlet within Deployment Discriptor called WEB.XML.
+
+        6 - From the body of Servlet's doGet() and doPost() we read these values and use them.
+
+        7 - Now if data changes in future then we only need to UPDATE web.xml.
+
+        8 - Syntax 
+
+            <web-app>
+                <servlet>
+                    <init-param>
+                        <param></param-name>
+                        <param></param-value>
+                    </init-param>
+                </servlet>
+            </web-app>
+
+    #READING INITIALIZATION PARAMETERS
+
+        9 - To read initialization parameters we need to do following.
+
+            a - Obtains ServletConfig object.
+
+            b - Call the method called getInitParameter of ServletConfig.
+
+            c - To get ServletConfig object we need to call a method called getServletConfig() of our super class called HttpServlet.
+
+            d - prototype of getServletConfig()
+
+                public ServleyConfig getServletConfig()
+            
+            e - prototype of getInitParameter()
+
+                public String getInitParameter(String)
+
+    #ServletConfig 
+
+        1 - ServletConfig is an Inteface.
+
+        2 - ServletConfig interface is implemented by only two entities 
+
+            a - GenericServlet (abstract class) 
+            b - HttpServlet (abstract class)
+
+        3 - ServletConfig object repersents SERVLET CONFIGURATIONS , and it is create by ServletContainer to pass INFORMATIONS to servlet during INITIALIZATION.
+
+            
+#CONTEXT PARAMETER
+
+    1 - Servlet Initialization Parameters are created for SPECFIC SERVLET only.
+
+    2 - But in many cases we might want to access these values in MULTIPLE SERVLTES.    
+
+    3 - ex 
+
+        In Login and Registration Servlets , we need some COMMON VALUES like 
+
+            a - Driver Name 
+            b - Connection String 
+            c - Username 
+            d - Password 
+
+    4 - In this situation this is not sensible to set these values LOCALY to servlets because we have to write the SAME ENTRIES , multiple times in web.xml.
+
+    5 - Thus a much better approcah is to configure it in such a way so that we write these values only once in web.xml and become availible for all Servlets.
+
+    6 - This is done by using Context Parameters.
+
+    #READING CONTEXT INITIALIZATION PARAMETER
+
+        7 - To read context initialization parameters, we need to do following.
+
+            a - Obtain the object of ServletContext 
+
+            b - Use method called getInitParameter of ServletContext object to read parameters.
+
+        8 - To get ServletContext object we call a method called getServletContext() of our super class HttpServlet.
+
+        9 - prototype of getServletContext() 
+
+            public ServletContext getServletContext()
+
+        10 - prototype of getInitParameter() 
+
+            public String getInitParameter(String)
+
+#DIFFERENCE BETWEEN INITIALIZATION AND CONTEXT PARAMETERS
+
+    1 - Initialization Parameters are LOCAL to servlet , while Context Parameter are GLOBAL.
+
+    2 - Initialization Parameters are Coded inside sevlet tag but, Context Parameters are coded inside web-app tag outside of any servlet tag.
+
+    3 - Initialization Parameters are READ using ServletConfig object and Context Parameters are READ usig ServletContext object.
+
+    4 - ServletContext object is GLOBAL and created only ONCE for entire Application but ServletConfig is created for each servlet.
+
+#EVENT HANDELING IN SERVLET CONTEXT 
+
+    1 - Reduncey of code is not very good thing
+
+    2 - Moreover the code for LOADING the DRIVER and OPENING the CONNECTION should run only once.
+
+    3 - For such kind of code which should be run only once for all the resources java allows us to write these kind of codes in such a place where it gets executed 
+        only once as soon as APPLICATIONS GETS DEPLOYED , and this is called the LIFE CYCLE OF SERVLET CONTEXT. 
+
+    4 - Whenevr server deploys our APPLICATION so at that time Server creates an object of ServletContext , which is aimed for ENTIRE application.
+
+    5 - And once this object is created the server calls a method called contextInitialized().
+
+    6 - This method is availible in ServletContextListener interface.
+
+    7 - ServletContextListener
+
+        a - It is an interface presented in javax.servlet package.
+
+        b - It extends to java.util.EventListener.
+
+        c - Dekho bhaiya asa h ki, jab application deploy ho raha hota h ya phir undeploy ho raha hota h to jis particular class ne ServletContextListener interface 
+            ko implement kar rakha h usko server ek notification bhejta h.
+
+        d - But this class should be Configured in web.xml.
+
+        e - Syntax 
+
+            <web-app>
+
+                <listener>
+
+                    <listener-class></listener-class>
+
+                </listener>
+
+            </web-app>
+
+        e - Two methods are there 
+
+            1 - public void contextInitialized(ServletContextEvent e)
+
+            2 - public void contextDestroyed(ServletContextEvent e)
+
+    8 - So whenever we want to execute some code on SERVER STARTUP or on SERVER SHUTDOWN , then we have to override these methods and place our code inside them.
+
+    9 - contextInitialized() is used for setting some global initialization.
+
+    10 - contextDestroyed() is used for global cleanup of resources.
+
+    11 - Steps for event handeling of ServletContext 
+
+        a - Create a class which implements ServletContextListener.
+
+        b - Override method contextInitialized() and contextDestroyed() as requirement.
+
+        c - Compile class and place .class file inside classes subdirectry.
+
+        d - Make an entry in web.xml , create a tag called <listener> and inside it create a tag called <listener-class> and specifiy listener class.
+
+        e - Start the server which will allow TOMCAT to create an object of ServletContext and call LIFE CYCLE methods of ServletContext.
+
+    12 - passing data from listener to servlet 
+
+        a - Java allows us to pass data from listener to servlet.
+
+        b - Obtain ServletContext object , this is done by calling the method getServletContext() of ServletContextEvent object passed as ARGUMENT to method 
+            contextInitialized().
+
+        c - Once we get the object of ServletContext then we call a method setAttribute() of ServletContext object whose prototype is following 
+
+            public void setAttribute(String name , Object value);
+        
+        d - Inside Servlet get the object of ServletContext and call the method called getAttribute() whose prototype is following.
+
+            public Object getAttribute(String key)
+
+#TRANSFERRING REQUEST
+
+    1 - It very often happens that we may wanna transfer the User to any other WEB-RESOURCES.
+
+    2 - This web resource may be any Servlet or any Html file or page within applicaiton or outside application.
+
+    3 - This is known as TRANSFERRING REQUESTS.
+
+    4 - So we can say that Transferring request is an INTEGRAL PART of any java web application and in java it can be done in 2 ways 
+
+        a - REQUEST REDIRECTION
+
+        B - REQUEST DISPATCHING
+
+    5 - Whenever in our Servlet we want to STOP the CURRENT REQUEST PROCESSSING CYCLE and move user to other resource then we use Request Redirection.
+
+        ex - After accepting userid/password we may want to redirect user back to LOGIN page if userid/password are incorrect because taking further this 
+             doesn't make any sence so kill the current request processing.
+
+    #REQUEST REDIRECTION
+    
+        6 - How to perform request redirection
+
+            a - For performing request redirection we use method called sendRedirect() of HttpServletResponse interface.
+
+            b - When we call the method sendRedirect() , then Server sends special response to browser and that is 302 / 304 , then after getting response 
+                browser redirects to another URL.
+
+            c - prototype
+
+                public void sendRedirect(String) throws IOException 
+
+            d - ex 
+
+                response.sendRedirect("login.html") [relative addressing]
+                
+            response.sendRedirect("https://www.google.com") [absolute addressing]
+
+    #REQUEST DISPATCHING
+
+        7 - In some cases we may want to include CONTENT from an html file or OUTPUT of any servlet in current SERVLET'S RESPONSE which we have to send back to client.
+
+        8 - Or In some cases we may want to just pass the current Http Request to any other servlet to process this request further.
+
+        9 - So in such cases we use a technique called Request Dispatching , which is dont using a special interface called REQUEST DISPATCHER.
+
+        10 - RequestDispatcher
+
+            a - It is an interface.
+
+            b - This defines an object which recieves the request from CLIENT and send this request to further RESOURCES like (servlet, jsp, or html file etc) on the 
+                Server.
+
+            c - ServletContainer creates RequestDispatcher object.
+
+            d - RequestDispatcher object is presented in javax.servlet package.
+
+            e - RequestDispatcher has 2 methods to dispatch request 
+
+                1 - forward()
+
+                2 - include()
+
+            f - include()
+
+                a - prototype 
+
+                    public void include(ServletRequest request , ServletResponse response) throws ServletException,IOException 
+
+                b - As the name indicates that method inclde() is used to ADD CONTENT of another web resource into CURRENT SERVLET'S RESPONSE.
+
+                c - So the result which browser gets is the combined result of the output of 1st servlet as well as another web resource which was called using include.
+
+            g - forward()
+
+                a - prototype 
+
+                    public void forward(ServletRequest request , ServletResponse response) throws ServletException , IOException 
+
+                b - So forward() method forwards the current request from one servlet to another , The original servlet can perform some INITIAL PROCESSING on 
+                    request then forwards to another resource for further processing of request.
+
+            g - forward() VS include()
+
+                a - Although the prototype of both the methods is almost same but they have a very important difference between them.
+
+                b - Whenever we call include() from 1st servlet so the controll goes to 2nd servlet and collects the output generated from 2nd servlet , and then 
+                    COMES BACK to 1st servlet and if any extra content needs to be appended then this activity is also done and finally the compelete response is 
+                    sent back to client.
+
+                c - So the FINAL SHOT to response is given by 1st servlet.
+
+                d - On the other hand if we call forward() then although controll COMES BACK to 1st servlet but till that time the output has ALREADY BEEN COMMITED 
+                    i.e. 1st servlet never gets a chance to add something to response.
+
+                e - Moreover if we have already commited the response to client then if we call forward() so we will get IllegalStateException.
+
+                f - The forward() method should be used to give the SOLE responsibility to another resource for replying to user.
+
+    #STEPS REQUIRED FOR REQUEST PROCESSING 
+
+        1 - Get an object of RequestDispatcher.
+ 
+        2 - Using RequestDispatcher object call the method include() or forward() to dispatch request.
+
+        3 - To get RequestDispatcher object we need to call the method getRequestDispatcher() of HttpServletRequest.
+
+        4 - prototype 
+
+            public RequestDispatcher getRequestDispatcher(String resource)
+
+        5 - Once we get RequestDispatcher object then we can call method include() or forward() passing them request and response object.
+
+        6 - To pass DATA from one resource to another we use method called setAttribute() of HttpServletRequest.
+
+        7 - prototype 
+
+            public void setAttribute(String key , Object value)
+
+        8 - Similarily if we want to get DATA then we use method called getAttribute() of HttpServletRequest.
+
+        9 - prototype 
+
+            public Object getAttribute(String key)
+
+#JSP
+
+    1 - JSP stands for Java Server Pages.
+
+    2 - JSP is DYNAMIC PAGE GENERATION TECHNOLOGY.
+
+    3 - JSP was developed by SUN MICRO SYSTEMS in the year 1999.
+
+    4 - The main AIM of Jsp is to SIMPLIFY the DEVELOPMENT of Java Web Application and REMOVE the DRAWBACK of Servlets.
+
+    5 - However Servlet and Jsp both are important for web application and shoud be used according to REQUIREMENTS while following INDUSTRY STANDARDS.
+
+    #DRAWBACKS OF SERVLET.
+
+        1 - In servlet a programmer has to EXTEND specific Servlet class either HttpServlet or GenericServlet.
+
+        2 - Programmer has to give the EXACT PROTOTYPE of doGet() and doPost() and also override them.
+
+        3 - After creating Servlet we have to CONFIGURE that in web.xml.
+
+        4 - In servlet to embed HTML we have to use Java Code i.e. all HTML part is embeded inside println() which is complex because we will have to follow all Java 
+            Rules.
+
+        5 - If we modify Servlet code then it requires RECOMPILING , REDEPLOYING of Servlet and RESTARTING server.
+
+    #ADVANTAGES OF JSP 
+
+        1 - Jsp is smaller in size than Servlet.
+
+        2 - In Jsp there are PREDEFINED TAGS to write java inside HTML that's why they are much easier to HANDLE than Servlet.
+
+        3 - If we modify Jsp then it doesn't require any recompilation of Jsp because Servlet Container Automatically Compiles it.
+
+        4 - Jsp doesn't require ANY CONFIGURATION in web.xml i.e. NO mapping is needed.
+
+        5 - Moreover if we modify Jsp then it doesn't require any REDEPLOYEMENT and RESTARTING server , because it is automatically handled by Servlet Container.
+
+    #LIFE CYCLE OF JSP
+
+        1 - A jsp page is Converted into Servlet in order to Service requests.
+
+        2 - Translation of Jsp page to Servlet is called Life Cycle of Jsp.
+
+        3 - The WHOLE life cycle of jsp is exactly same as servlet except first step and that Translation of Jsp into Servlet.
+
+    #STEPS OF JSP LIFE CYCLE 
+
+        1 - Translation of Jsp page into Servlet.
+
+        2 - Compilation of Sevlet into bytecode.
+
+        3 - Loading the servlet's class.
+
+        4 - Instantiate the servlet.
+
+        5 - Initialization of servlet using jspInit() method.
+
+        6 - Request Processing by calling _jspService() method.
+
+        7 - Destroying servlet using jspDestroy() method.
+
+        
+        #TRANSLATION PHASE
+
+            1 - As the request comes to jsp page Servlet Container converts this .jsp file into .java file.
+
+
+        #COMPILATION PHASE 
+
+            1 - After translation the compilation of Servlet into .class file is done by conatiner.
+            
+        #LOADING PHASE 
+
+            1 - As soon as the compilation is done so then .class file is loaded into server's memory.
+
+        #INSTANTIATION PHASE 
+
+            1 - The object of Servlet is created.
+
+        #INITIALIZATION
+
+            1 - Now the container calls to jspInit() to initialze the servlet object.
+
+        #REQUEST PROCESSING PHASE 
+
+            1 - A new thread is created which invokes to _jspService() with request(HttpServletRequest) and response(HttpServletResponse) as parameters.
+
+        #NOTE - Now for every next request only _jspService() will run. However if jsp is modified then all the stpes are executed again.
+
+        #DESTUCTION PHASE.
+
+            1 - In this phase Container decides that sevlet is no longer needed to serve requests further so container calls to jspDestroy() and now 
+                Servlet is ready for the GARBAGE COLLECTION.
+
+#TYPES OF JSP ELEMENTS  
+
+    1 - A jsp page can contain various types of JSP based programming elements.
+
+    2 - Each of these JSP based programming element is used to WRITE JAVA CODE inside HTML to make our page DYNAMIC.
+
+    #JSP ELEMENTS 
+
+        A - JSP TAGS 
+
+            1 - SCRIPLET
+
+            2 - DECLARATIVES
+
+            3 - EXPRESSION
+
+        B - JSP DIRECTIVES
+
+            1 - PAGE 
+
+            2 - INCLUDE 
+
+            3 - TAGLIB
+
+        C - JSP ACTION ELEMENTS 
+
+            1 - USE BEANS
+            
+            2 - SET PREOPERTY
+
+            3 - GET PROPERTY 
+
+            4 - INCLDUE 
+
+            5 - FORWARD
+
+        d - CUSTOM TAGS 
+
+            1 - CUSTOM TAG 
+
+            2 - SIMPLE TAG
+
+
+    #JSP TAGS 
+
+        1 - Jsp tags are used to insert Java code inside Jsp page.
+
+        2 - Whenever the Servlet Container translates JSP to Servlet then it places all the coding written inside jsp tags into these methods 
+
+            a - jspInit()
+
+            b - _jspService()
+
+            c - jspDestroy()
+
+        #SCRIPLETS 
+
+            1 - The Scriplet tag is used to place java code inside Jsp page which makes our page DYNAMIC.
+
+            2 - Whenever the Container translates JSP to Servlet then all the coding written inside Scriplets is pasted in _jspService() by the container.
+
+            3 - Syntax
+            
+                <% 
+                    //java code 
+                %>
+
+            #WHAT IS ALLOWED IN SCRIPET TAG
+
+                1 - We can declare vairiables inside it.
+
+                2 - We can create Objects of other classes.
+
+                3 - We can use built-in objects given by jsp.
+
+            #WHAT IS NOT ALLOWED IN SCRIPLET
+
+                1 - We can't define a method in scriplet.
+
+                2 - We can't declare STATIC vairiables in scriplet.
+
+                3 - We can't directly write HTML inside scriplet but we can write then using println() of predefined object out.
+
+        #DECLARATIVES TAG 
+
+            1 - Declarative tags also allow us to write PURE JAVA code inside it's body like scriplet.
+
+            2 - Whatever we write inside Declarative tag , that is pasted ABOVE the _jspService().
+
+            3 - syntax 
+
+                <%!
+                
+                %>
+
+            4 - Declarative tag is just like scriplet tag , but whatever we write inside Declarative tag is pasted ABOVE _jspService() and inside the CLASS 
+                generated from this jsp.
+
+            5 - We can DECLARE VARIABLES inside declarative tag and then use them inside scriplet.
+
+            6 - ex :
+
+                <%! int a = 5; %>
+                <%
+
+                    out.println("a = "+a);
+
+                %>
+
+            7 - We can DEFINE METHODS incide declarative tag and then call them inside scriplet.
+
+            8 - ex :
+
+                <%!
+
+                 int add(int a , int b) {
+                    return a + b;
+                 }
+                
+                %>
+
+                <% 
+                    out.println(add(10 , 20));
+                %>
+
+            9 - We can USE or CREATE objects in declarative tag and use them inside scriplet.
+
+            10 - ex : 
+
+                <%! java.util.Date today = new java.util.Date() %>
+                <%
+                    out.println(today);
+                %>
+
+            11 - We can't use PREDEFINED OBJECT given by jsp like out , request,  response , session in declarative tag because these all the objects are created 
+                 inside _jspService() by JSP.
+
+        #EXPRESSION TAG 
+
+            1 - Expression tag allows us to write any VALID JAVA EXPRESSION , inside expression tag whatever we write is TRANSFERED as ARGUMENT to out.print() inside 
+                _jspService().
+
+            2 - syntax 
+
+                <%= Java Expression %>
+
+    #LIST OF IMPLICIT OBJECTS IN JSP PAGE 
+
+        1 - The jsp technology provides us 9 PREDEFINED OBJECTS which we can always use in a jsp web page.
+
+        2 - These objects are PREDEFINED so we don't have to create them rather they are already created by Container for us.
+
+        3 - list 
+
+            a - out - JspWriter - class 
+            ---------------------------
+
+                1 - JspWriter is presented in javax.servlet.jsp.JspWriter package.
+
+                2 - JspWriter is an ABSTRACT class.
+
+                3 - JspWriter inherits to Writer (abstract class).
+
+            b - request - HttpServletRequest - interface.
+
+            c - response - HttpServletResponse - interface.
+
+            d - session - HttpSession - interface.
+
+            e - config - ServletConfig - interface.
+
+            f - application - ServletContext - interface.
+
+            g - pageContext - PageContext - class 
+            ---------------------------------------
+
+                1 - PageContext is availible in javax.servlet.jsp package.
+
+                2 - PageContext is an ABSTRACT CLASS.
+
+                3 - PageContext extends to JspContext.
+
+                4 - PageContext provides Some Userfull CONTEXT INFORMATIONS when jsp is used in servlet enviorement.
+
+                5 - PageContext provides access to all the NAMESPACES associated with jsp page , Provides access to sevral PAGE ATTRIBUTES , IMPLICIT OBJECTS are added 
+                    to PageContext automatically.
+
+                #JspContext
+                -----------
+
+                    1 - JspContext in availible in javax.servlet.jsp package.
+
+                    2 - JspContext is an ABSTRACT CLASS.
+
+                    3 - JspContext serves as a BASE class for PageContext.
+
+                    4 - JspContext abstracts all the infprmations which are not SPECIFIC to servlets.
+
+                    5 - There are lots of use cases more , which i will learn smartly with help of someone.
+
+            h - exception  - throwable - class.
+
+            i - page - Object - class.
+
+    #DIRECTIVES IN JSP
+
+        1 - Directives are INSTRUCTIONS given by PROGRAMMER to JSP container and based on them jsp container takes different ACTIONS while converting jsp to java.
+
+        2 - A jsp directive affects the OVERALL STRUCTURE of Servlet class and has following form 
+
+            <%@ directive attribute = "value" %>
+
+        3 - Overall we have 3 directives 
+
+            a - page 
+
+            b - include 
+
+            c - taglib 
+
+        4 - PAGE DIRECTIVE 
+
+            1. Page Directive as it's name suggests that it is used to specify properties and attributes of Jsp page as WHOLE.
+
+            2. Container uses these attributes while converting a jsp page into Servlet.
+        
+            3. syntax 
+
+                <%@ page attribute="value" %>
+
+            4. # PAGE DIRECTIVE ATTRIBUTES
+
+                1 - language 
+
+                    a. language attribute tells to container that which programing language does programmer want to use.
+
+                    b. It's DEFAULT value is JAVA but can be changed to other language Provided container supports the language.
+
+                    c - <%@ page language="Java" %>
+
+                2 - import
+
+                    a. import attribute is used to specify that which packages and classes we wanna use in our jsp page.
+
+                    b. There are 4 packages already imported by container 
+
+                        # java.lang
+                        # javax.servlet 
+                        # javax.servlet.http 
+                        # javax.servlet.jsp 
+                    
+                    c. <%@ page import="java.util.* , java.sql.*" %> 
+
+                3 - extends 
+
+                    a. I don't think so it is that much important 
+
+                4 - session 
+
+                    a. session attribute is an attribute which specifies whether we are performing SESSION TRACKING or not.
+
+                    b. By default session attribute value is TRUE but if we don't wanna perfome session tracking then we must set it to FALSE.
+
+                5 - buffer
+
+                    a. buffer attribute is used to specify the BUFFER SIZE of our page.
+
+                    b. Buffers are areas or memories in SERVER where the RESPONSE generated by Jsp is copied.
+
+                    c. Whenever the BUFFER is full then container translates or sends BUFFER DATA to borwser.
+
+                    d. By default the buffer size is 8kb but can be INCREASED by any MULTIPLE of 8 as per our requirement.
+
+                    e. <%page buffer="16kb" %>
+
+                6 - autoFlush
+
+                    a. autoFlush attribute is an attribute which specifies that what should container do if buffer is FULL.
+
+                    b. By default autoFlush attribute value is true it means that container sends the response to clint AS SOON AS BUFFER GETS FULL.
+
+                    c. But if it is set to false then programmer will have to take CARE of FLUSHING otherwise if buffer gets full then an EXCEPTION OCCURS.
+
+                7 - contentType
+
+                    a. content type attribute is used to inform that in which format data is being sent from SERVER to CLIENT.
+
+                    b. The default value of content type attribute is text/html , means a SIMPLE TEXT or TEXT with HTML , but can be changed to any VALID MIME FORMAT 
+                        as per requirement.
+
+                    c. Some formats are 
+
+                        # "image/jpeg"
+                        # "text/plain"
+                        # "application/msword"
+
+                    d. syntax 
+
+                        <%page contentType = "text/html" %>
+
+                8 - errorPage
+
+                9 - isErrorPage
+
+        5. INCLUDE DIRECTIVE 
+
+            1. include is used to INCLUDE any othet jsp into current jsp.
+
+            2. syntax 
+
+                <%include file = "resource name" %>
+
+        6 - TAGLIB DIRECTIVE 
+
+            1. Isko dekhlo bhaiya apne se
+
+#WEB APPLICATION DEVELOPMENT MODALS.
+
+    1 - Web applicaiton development is COMPLEX area which have COMBINATION of MULTIPLE TECHNOLOGIES.
+
+    2 - Among these technologies , we have various developers coming from different backgrounds.
+
+    3 - Now to bring UNIFORMITY among all these developers , IT INDUSTRY has developed couple of strict rules or guidlines which must be followed whenever we 
+        develop a web applicaiton.
+
+    4 - These guidlines are called DESIGN PATTERNS or WEB APPLICAITON DEVELOPMENT MODALS.
+
+    5 - And the Most popular pattern is MVC pattern.
+
+    6 - The term MVC stands for...
+
+        M - MODAL 
+
+        V - VIEW 
+
+        C - CONTROLLER.
+
+    7 - The term MODAL stands for a SIMPLE JAVA CLASS (also called DAO) which takes the responsibility of COMMUNICATION to DATABASES or DATASOURCES.
+
+    8 - This is because almost in every Web Application , INTERACTION with DATABASE in INVOLVED there.
+
+    9 - Now , while SEPERATING the database interaction code from SERVLET and JSP , we are achieving a very important concept called SEPERATION OF CONCERN. 
+
+    10 - Now suppose in FUTURE if databse is changed from ORACLE to MySQL so we will only have to edit out modal class.
+
+    11 - The view componant of MVC is used to generate RESPONSE to BROWSER and whatever the user VISUALIZES on his borwser that is generated from VIEW componant.
+
+    12 - Most of the time these componants are JSP or HTML.
+
+    13 - The main advantage of this approach is that if in future the LOGIC of PRESENTATION needs to changed then that can be done easily without disturbing 
+         to MODAL or CONTROLLER.
+
+    14 - Controller is the HEART of MVC architecture , Controller is actually Java Servlet which accepts the request from client.
+
+    15 - Controller manages the FLOW of data between View and Modal.
+
+    16 - So , How the view and modal will communicate with each other that is CONTROLLED by controller.
+
+    17 - So every STANDARD WEB APPLICATION follows to MVC architecture.
+
+
+# SESSION TRACKING
+
+    1. Http is STATELESS protocall.
+
+    2. It means that once the SERVER sends RESPONSE to client AFTER that Server doesn't know anything about client or it's data or the REQUEST to which it has served 
+        response.
+
+    3. That' why if the same client make an another request then SERVER will NOT consider it to be a SECOND REQUEST by client in CONTINUATION rather the server will 
+        assume the SAME client as new User.
+
+    4. In most of the cases this STATELESS NATURE of HTTP will not be a problem.
+
+    5. But in many cases the Server should be able to IDENTIFY to CLIENT and ASSOCIATE him with previous request.
+
+    6. In a SHOPPING CART APPLICATION where the user wants to add MULTIPLE ITEMS on cart using MULTIPLE REQUESTS , this is best use case of session tracking.
+
+    # USE CASE IN CART APPLICATION
+
+        7. So whenever the user adds a new item into it's cart then SESSION TRACKING is used to IDENTIFY that which PARTICULAR CART is this user's cart.
+
+    # USE CASE IN SECURTIY APPLICATION
+
+        8. Session tracking is also used in some cases where some pages of applications are very important for SECURITY purpose , so there we want that if uses access 
+            these type of web pages then user should be LOGGED IN first then only user can access these web pages OTHERWISE not.
+
+            and for recognizing this , whether user has logged in (session is created) or not, session tracking is used.
+
+    # SESSION
+
+        1. Session is the TIME PERIOD which user has SPENT while NAVIGATING to the website.
+
+    # SESSION TRACKING 
+
+        1. Session tracking is process in which website KEEPS TRACK of all user's ACTIVITIES whithin that SESSION.
+
+    # HOW JAVA SUPPORTS SESSION TRACKING
+
+        1. Java supports Session Tracking in FOUR ways.
+
+            a - Hidden Fields.
+
+            b - Query String.
+
+            c - Cookies
+
+            d - Java's Session Api.
+
+        # HIDDEN FIELDS.
+
+            1. Hidden fields are VERY COMMANLY used for Session Tracking.
+
+            2. Hidden fields are just like normal TEXT FILED but having only ONE DIFFERENCE and that is Hidden Fileds are NOT VISIBLE to the users.
+
+            3. So hidden fields are used to SEND DATA from one page to another WITHOUT SHOWING it to the user.
+
+            4. SYNTAX - <input type = "hidden" value = "some value" name = "some name" />
+
+            5. For ex we can track DATE and TIME of user that when user visited a particular page using hidden fields.
+
+            # DRAWBACKS 
+
+                1. Hidden fields are not very SECURE because user can LOOK ALL DATA stored in hidden fields by SOURCE CODE of page.
+
+                2. Hidden fields can make web page VERY HEAVY to be DOWNLOADED in the borwser due to SIGNIFICANT AMOUNT of data and SO MANY HIDDEN FIELDS.
+
+                3. Hidden fields only work when the page is DYNAMICALLY GENERATED.
+
+        # QUERY STRING 
+
+            1. Query String is another way of TRANSMITTING data from one page to another
+
+            2. Whenever we use ANCHOR tag it generates the CLICKABLE LINK.
+
+            3. ex 
+
+                <a href = "home.jsp" >HOME PAGE</a>
+
+            4. When above code will run it will generate a link , when user will click on that he will be REDIRECTED to Home.jsp page.
+
+            5. Now during this redirection if we want to send data to home.jsp then we can USE query String.
+
+            6. Query String is KEY-VALUE PAIR embedded inside href attribute's value.
+
+            7. So when user clicks on the link then KEY-VALUE pair are SENT as PARAMETER to target page.
+
+            8. And at the SERVER END we can access these PARAMETERS using request.getParameter().
+
+        # COOKIES 
+
+            1. Cookies are SMALL TEXT FILES which BORWSER recieves from SERVER END embedded inside the RESPONSE.
+
+            2. These cookies are SAVED by browser to the SECONDRY memeory of DEVICE and when the SAME BROWSER sends NEXT request to server the it sends cookies as well.
+
+            3. In this way the SERVER can DETECT whether request is coming from NEW user or REVISITING user.
+
+            # HOW JAVA SUPPORTS COOKIES 
+
+                1. In order to create and use cookie , we can use a PREDEFINED CLASS called Cookie availible in javax.servlet.http package.
+
+                2. Cookie class provides us som very important methods by which we can CREATE cookie , WRITE DATA in that cookie and also READ DATA from that cookie.
+
+            # HOW COOKIES ARE SENT FROM SERVER TO BORWSER 
+
+                1. To send Cookies from SERVER to BROWSER we can use a method called addCookie() of HttpServletResponse object.
+
+                2. prototype 
+
+                    public void addCookie(Cookie);
+
+            # HOW TO RETRIEVE COOKIE SENT BY BORWSER TO SERVER 
+
+                1. To retrieve Cookie in server we can use a method called getCookies() of HttpServletRequest object.
+
+                2. prototype 
+
+                    public Cookie[] getCookie();
+
+            # USE OF COOKIE CLASS 
+
+                1. To create Cookie we use following CONSTRUCTOR 
+
+                    Cookie(String name , String value).
+
+            # METHODS OF COOKIE CLASS 
+
+                1. This method SETS the value of Cookie 
+
+                    public void setValue(String);
+
+                2. This method RETURNS the value of Cookie 
+
+                    public String getCookie();
+
+                3. This method RETURNS the NAME of Cookie 
+
+                    public String getName();
+
+                4. This method MAINTAINS the LIFE TIME of Cookie in the BROWSER, this method accepts an int value repersenting the number of SECONDS.
+
+                    public void setMaxAge(int);
+
+                    there are 3 POSSIBILITIES retalted to LIFE TIME of Cookie 
+
+                        a - If passed value is POSITIVE than Cookie will LIVE up to that number of seconds in browser.
+
+                        b - If passed value is NEGATIVE then Cookie will LIVE till the browser is not closed.
+
+                        c - If passed value is ZERO then Cookie will IMMEDIATLY be deleted.
+
+                5. This method RETURNS the LIFE TIME of cookie
+
+                    public int getMaxAge();
+
+        # SESSION API
+
+            1. All the Session Tracking methods which we have studied till not were totally DEPENDENT on BROWSER.
+
+            2. However Java has PROVIDED us one another machanism to IMPLEMENT and USE Session Tracking at the SERVER END.
+
+            3. That approach is HTTP SESSION.
+
+            4. In Http Session approach as soon as a USER visits our web-site the CONTAINER creates an OBJECT of SPECIAL interface called HttpSession 
+               and associates that current user with this object.
+
+            5. And when user visits for SECOND TIME then SERVER picks up the session object of that user from POOL OF SESSION and makes it availbe to 
+               application.
+
+            HttpSession Interface 
+            ----------------------
+
+                1. HttpSession is an INTERFACE.
+
+                2. This is a way to CREATE SESSION  , STORE INFO OF USER , IDENTIFY USER.
+
+                3. Servlet Container uses this interface to create SESSION between HTTP CLIENT and HTTP SERVER.
+
+                4. HttpSession allows SERVLETS to 
+
+                    a. Servlets can VIEW and MANIPULATE informations about SESSION , such as SESSION IDENTIFIER , CREATION TIME , LAST ACCESSED TIME.
+
+                    b. Servlets can BIND object to session , allowing INFORMATIONS to PERSIST across MUTLIPLE USER CONNECTIONS.
+
+            # HOW TOMCAT IS ABLE TO IDENTIFY , WHICH OBJECT BELONGS TO WHICH USER 
+
+                1. On creating HttpServlet interface object CONTAINER also creates a UNIQUE ID which is ALPHANUMERIC string called JSESSION ID and Container 
+                   stores this id in SESSION OBJECT as well as COOKIE called jsessionid.
+
+                2. And then Container TRANSMITES this cookie to BORWSER and then browser stores it in CLIENT MACHINE.
+
+                3. Now as we know that BROWSER always SENDS BACK cookie to SERVER , whenever SAME USER REVISITS.
+
+                4. So when server recieves this cookie then CONTAINER takes following steps...
+
+                    a - Container will RETRIEVE session id from that cookie.
+
+                    b - Container will PULL OUT the CORRESPONDING session object from SESSION POOL.
+
+                    c - Container makes that session object AVAILIBLE to application.
+
+            # WHAT IS THE PROGRAMMER ROLE IN THIS ENTIRE PROCESS 
+
+                1. Get the session object.
+
+                2. SET or GET data in session object.
+
+                3. Rest all the OPEATIONS like CREATING the SESSION OBJECT , ASSIGNING SESSION ID TO IT , RETRRIEVING SESSION ID FROM COOKIE are work of SERVER.
+           
+            # HOW TO GET THE SESSION OBJECT 
+
+                1. In order to get session object we need to call a method called getSession().
+
+                2. getSession() is a method of HttpServletRequest object.
+
+                3. prototype 
+
+                    a - public HttpSession getSession();
+
+                    b - public HttpSession getSession( boolean );
+
+                4. This method CREATES and RETURNS the session object if it is NOT created , but if it is created then it returns SPECIFIC SESSION OBJECT , but if we 
+                    pass false then NULL will be returned in case when session is not created.
+
+            # METHODS OF SESSION OBJECT 
+
+                1. public boolean isNew() - This method returns TRUE if session is CREATED JUST NOW , otherwise it returns FALSE.
+
+                2. public void setAttribute(String key , Object value) - This method stores DATA in key-value pair in session object.
+
+                3. public Object getAttribute(String key) - This method retuns data based on Key.
+
+                4. public void removeAttribute(String key) - This method removes KEY-VALUE pair from object of passed key.
+
+                5. public void setMaxInactiveInterval(String key) - This method sets the INACTIVE INTERVAL in seconds for Session object.
+
+                6. public int getMaxInactiveInterval() - This method returns INACTIVE TIME PERIOD in SECONDS for session object.
+
+                7. public String getId() - This method return SESSION ID related to session object.
+
+                8. public void invalidate() - This method DESTROYS the session object.
+
+                9. public long getCreationTime() - This method returns the TIME when session was created in MILISECONDS.
+
+            # SESSION TRACKING WITHOUT COOKIES
+
+                1. Whenever we implement SESSION TRACKING using SESSION API then CONTAINER creates a cookie called jsessionid and returns it to CLIENT.
+
+                2. Now when the same client REVISITS so borwser SENDS BACK cookie , and CONTAINER fetches the SESSION ID from cookie , picks up SESSION 
+                   object from session pool and makes it avalible to our application.
+
+                3. That's why we can say that COOKES play an IMPORTANT ROLE in compelete SESSION TRACKING.
+
+                4. Now if User DISABLES cookies settings in his BROWSER then SESSION TRACKING WILL FAIL.
+
+                5. To overcome this JAVA provides us a TECHNIQUE called URL ENCODING.
+
+                6. In URL ENCODING technique we create CLICKABLE ELEMENTS and in href attribute we NOT ONLY include URL of TARGETED page but also the session id.
+
+                7. So as soon as user clicks on those clickable items the SERVER will get SESSION id.
+
+                # URL ENCODING CAN BE DONE IN TWO WAYS 
+
+                    1. MANUALLY : In manually url encoding technique we MANUALLY generate SESSION ID and then INCLUDE it to the URL.
+
+                        ex : <% 
+
+                                String url;
+
+                                url = "____.jsp ; jsessionid = "+session.getId();
+
+                            %>
+
+                            < form action = " <%= url %> " />
+
+                    2. encodeUrl() - encodeUrl() belongs to RESPONSE object , accepts the URL of our page and RETURNS the url with SESSION ID appended to it.
+
+                        ex : <%
+                        
+                                String url;
+
+                                url = response.encodeUrl("page.jsp");
+                        
+                             %>
+
+                             <form action = "<%= url %>" />
+
+        # EVENT HANDELING IN SESSION OBJECT 
+
+            1. While developing a WEB APPLICATION , when we apply SESSION TRACKING then there are MULTIPLE EVENTS fired in the LIFE TIME of session object.
+
+            2. CEATION and DESTRUCTION of Session object executes TWO important methods which are following...
+
+                a - sessionCreated()
+
+                b - sessionDestroyed()
+
+            3. These two methods belong to HttpSessionListener INTERFACE.
+
+            4. If we want to use these EVENTS then we have to follow these steps...
+
+                a - Create a CLASS which IMPLEMENTS to HttpSessionListener INTERFACE.
+
+                b - Override sessionCreated() and sessionDestroyed() methods.
+
+            5. CONFIGURE it by writing LISTENER tag with the name of listener class.
+
+                ex : 
+
+                    <listener>
+
+                        <listener-class>MyListener</listener-class>
+                    
+                    </listener>
+
+
+        # Generally in java based web applications to DEVELOP FRONTEND part there is a SEPERATE frontend developer who has NO knowledge of Java.
+
+            1. So if that FRONTEND DEVELOPER wants to PUT some DYNAMIC CONTENT of web page (jsp) then this is a PROBLEM for him , becauae he has NO knowledge of 
+               java so he can't put dynamic content , Now to SOLVE this issue THE JAVA TEAM will provide SOME TOOLS to him to PUT dynamic content WITHOUT any JAVA 
+               code. 
+
+            2. So to achieve this BEHAVIOUR we need to learn 3 important technologies and they are...
+
+                a - Expression Language 
+
+                b - Custome Tags
+
+                c - Java Beans
+
+            # JAVA BEANS 
+
+                1. Java Beans are just a NORMAL JAVA CLASS having some set of RULES which makes it possible for US to access THEM wothout writing any JAVA CODE.
+
+                2. Java Bean should be the part of PACKAGE.
+
+                3. Java Bean should be PUBLIC.
+
+                4. Java Bean should have a NON-PARAMATRAIZED or DEFAULT constructor.
+
+                5. For all the INSTANCE MEMBERS which we want to access from JSP we should provide GETTERS and SETTERS.
+
+                6. The name of setters and getters should follow the NAME CONVENTION of setXXX and getXXX where XXX would be replace with the name of INSTANCE FIELD 
+                   with FIRST LETTER in UPPERCASE.
+
+                7. Creating Java Bean object 
+
+                    a. For creating Java Bean Object , we use a special tag called useBean whose general syntax is 
+
+                      <jsp : useBean 
+
+                            id = "name of the object"
+
+                            class = "name of the class"
+
+                            scope = "scope of the object"
+
+                      />
+
+                8. what is SCOPE attribute ?
+
+                    a. SCOPE attribute DEFINES the AVAILIBLITY and LIFETIME of JAVA BEAN OBJECT.
+
+                    b. SCOPE has FOUR values
+
+                        1. PAGE : page is the DEFAULT value , Java bean object is only availible to the CURRENT PAGE only , once the page's EXECUTION is over then 
+                                  Java bean object will be DESTROYED.
+
+                        2. REQUEST : Request value allows to Java Bean object to NOT ONLY be ACCESSIBLE in the CURRENT PAGE but also in all the pages to the REQUEST 
+                                     is getting FORWARDED.
+
+                        3. SESSION : Session value allows to Java Bean Object to be ACCESSIBLE to all the Web Pages in EVERY REQUEST which is generated AFTER the 
+                                     CURRENT REQUEST.
+
+                        4. APPLICATION : Application value allows to Java Bean object to LIVE FOREVER till the server/application is not stop , and accessible for all 
+                                         the COMPONANTS of application.     
+
+                 9. INITIALIZATION OF JAVA BEAN OBJECT.
+
+                    1. Just like we have JSP ELEMENT to CREATE a Bean Object , Similarily we have JSP ELEMENT to INITIALIZE a bean object.
+
+                    2. The name of INITIALIZATION jsp element is setProperty.
+
+                    3. SYNTAX 
+
+                        <jsp : setProperty 
+
+                            id = "id of the object"
+
+                            property = "name of the property"
+
+                            value = "value"
+
+                        />
+
+                10. ACCESSING BEAN OBJECT. 
+
+                    1. For accessing Java Bean Object we can use a jsp element called getProperty.
+
+                    2. SYNTAX 
+
+                        <jsp : getProperty 
+
+                            name = "id of the object"
+
+                            property = "name of the field"
+
+                        />
+
+            # EXPRESSION LANGUAGE 
+
+                1. Expression Language is one of the technology , which is used to produce SCRIPTLESS JSP pages.
+
+                2. It is added to JSP 2.0 SPECIFICATIONS.
+
+                3. Although we can use SCRIPET and JSP EXPRESSION to retrieve attributes and parameters with java code for the VIEW purpose.
+
+                4. But for Web Desiners it is HARD TO UNDERSTAND java , that's why expression language was introduced to retrieve attributes and parameters 
+                   using SIMPLE HTML like TAGS.
+
+                # ADVANTAGES OF EXPRESSION LANGUAGE.
+
+                    1. Although Expression Language seems to do SAME WORK done by Java Beans , but Expression Language has MORE Advantages than Java Beans.
+
+                    2. El has MORE COMPACT SYNTAX than Java Beans or Jsp Tags.
+
+                    3. Expression Language allows us to access NESTED PROPERTIES.
+
+                    4. It is used to access JAVA BEAN OBJECT as well as NON-BEAN OBJECT like MAP , ARRAYS and LISTS.
+
+                    5. SYNTAX 
+                      --------
+
+                        ${ firstThing.SecondThing }
+
+                    6. Here firstThing can be used as Expression Language IMPLICIT OBJECTS as well as ATTRIBUTES.
+
+                    7. There are total 11 IMPLICIT OBJECTS in el.
+
+                        # pageScope.
+
+                            usage - pageScope is used to ACCESS any VALUE which is set in PAGE SCOPE.
+
+                        # requestScope.
+
+                            usage - requestScope is used to ACCESS any VALUE which is set in REQUEST SCOPE.
+
+                        # sessionScope.
+
+                            usage - sessionScope is used to ACCESS any VALUE which is set in SESSION SCOPE.
+
+                        # applicationScope.
+
+                            usage - applicationScope is used to ACCESS any VALUE which is set in APPLICATION SCOPE.
+
+                        # param.
+
+                            usage - param is used to map any REQUEST PARAMETER with a SINGLE VALUE.
+
+                        # paramValues.
+
+                            useage - paramValues map to REQUEST PARAMETER with corresponding ARRAY of STRING values.
+
+                        # header.
+
+                            usage - header is used to map HEADER NAMES with their SINGLE VALUES.
+
+                        # headerValues.
+
+                            usage - headerValues is used to map HEADER NAMES with their corresponding ARRAY of STRING values.
+
+                        # cookie.
+
+                            usage - cookie maps COOKIE NAMES with their SINGLE STRING value.
+
+                        # initParam.
+
+                            usage - initParam is used to get CONTEXT INIT PARAMS.
+
+                        # pageContext. 
+
+                            usage - pageContext is used to get REQUEST , SESSION REFERENCES.
+
+                    8. The firstThing can also be the NAME of ATTRIBUTE , this attributes can be stored in any of these given SCOPES...
+
+                        # in page scope.
+
+                        # in request scope.
+
+                        # in session scope.
+
+                        # in application scope.
+
+                    9. NOTE : 
+                    
+                        1. Expression Language IMPLICIT OBJECTS are NOT SAME as implicit objects of JSP.
+
+                        2. Except pageContext , all the implicit objects are MAP objects.
+
+                        3. pageContext in an actual REFERENCE to the pageContext object , and pageContext is nothing but a JAVA BEAN object.
+
+                    
+                    # USING EL FROM ACCESSING PARAMETERS...
+
+                        1. EL has got very SPECIAL OBJECT called param which can be used to access PARAMETER i.e FORM DATA.
+
+                        2. To access the parameter we can SIMPLY write the PARAMETER NAME with PARAM object.
+
+                        3. We can use PARAM object to set PROPERTY on java beans inside JSP SET PROPERTY action element.
+
+                    # USING EL PARAM VALUES OBJECT...
+
+                        1. EL provides us another IMPORTANT OBJECT called paramValues which can be used to access multiple fields HAVING the SAME NAME.
+
+                        2. For example if we are accepting TWO EMAILS from user , for this we have used two TEXTBOXES with same name email, then we can 
+                           use paramValues object to access BOTH the emails.
+
+                    # USING EL TO ACCESS NON BEANS OBJECT.
+
+                        1. We can use EL SCOPE OBJECTS to access any object which is stored in JSP OBJECT.
+
+                    # THERE ARE SOME MORE USAGE OF EL , YOU CAN FIRGURE THAT OUT...
+
+# CUSTOM TAGS 
+-------------
+
+        1. The motive of custome tags is that , we wanna reduce the usage of java code in the JSP page.
+        2. We have some technologies like Java Beans or Expression Language but still for processing the Logic we need it.
+        3. For implementing Custome Tag we must create a class called Tag Handler , and a TLD file , and a tag in jsp page.
+        4. So whenever Container reads a jsp page and encounters a custome tag , then it called to Tag Handler class methods.
+        5. For creating a Tag Handler , JSP provides us some special set of methods which are availible in some interfaces and 
+        classes and these interfaces are avalible in javax.servlet.jsp.tagext package.
+        6. Following are some important Interfaces and Classes.
+        a - Tag(Interface) : This is the top level interface, provides us two methods called doStartTag() and doEndTag() called by 
+                                Container when it encounters customer tags.
+            
+        b - IterationTag(Interface) : This is child interface of Tag interface and provides us a methods called doAfterBody() which
+                                        allows us to apply looping over our tag.
+
+        c - BodyTag(Interface) : This is child interface of IterationTag interface and provides us a method called doInitBody() 
+                                    allows us to acces the body of custome tag.
+
+        d - TagSupport(Class) : This class implements to IterationTag interface and works as a helper class while developing our 
+                                tag handles class.
+
+        e - BodyTagSupport(Class) : This class implements to BodyTag Interface also extends TagSupport class and can be used by 
+                                    tag handler which have to interact with the body of the tag.
+
+        7. From JSP 2.0 , Sun introduced simple tags
+
+        8. simple tags allow us to create custom tags and it is easier to implement.
+
+        9. Moreover that is the reason they are called simple tags.
+
+        10. The handeling of Simple Tags contains 3 steps.
+            a - create of it's object.
+            b - initialization of attibutes.
+            c - overriding of doTag().
+
+            container will create Simple Tags object and will initialize it's attribute , then only thing we need to do is to create 
+            doTag().
+
+        12. SimpleTag(Interface) : This interface provides easier way of implementing tag handler. it is different from classic tag handler 
+                                instead of supporting the doStartTag() , doEndTag() etc... it simply provide us a method which 
+                                is doTag.which is called once and only once for any given tag invocation.
+
+                                it allows us to perform all the logic like iteration, evalution etc.
+
+                                and all these can be implemented inside a single methods that it is simple tag handler.
+
+        11. SimpleTagSupport(Class) : This class implements to SimpleTag interface and it provides implementation of doTag().
+
+        12. Syntax - 
+            public class myTag extends SimpleTagSupport {
+
+                public void doTag() throws JspException,IOException {
+
+                    logic...
+
+                }
+
+            }
+
+        13. Life Cycle of simpe tag 
+            a - A new tag handler object is created whenever container encounters a simple tag in our jsp page.
+            b - The container calls setJspContext() of this class so that we can get JspContext object.
+            c - Then container calls setters to apply attributes on the tag.
+            d - If the body exist then container calls the setJspBody() to set body of the tag as a JspFragement.
+            e - Then container calls doTag() , which carries out all the logic.
+
+        14. In jsp we get a built in object called out of JspWriter using which we can generate output to browser.
+
+        15. But in simple tag we need to call two methods to get JspWriter object.
+                a - the method getJspContext() to get JspContext object.
+                b - the method getOut() of JspContext object which returns us an object if JspWriter.
+
+
+        ---------------------------------------------------------------------------------------------------------------------------
+
+        16. Simple Tag with attributes
+            a - Provide data members as well as their setters.
+            b - Inside TLD file inside tag tag , provide one more tag called attribute.
+            c - Write the jsp page using attribute.
+
+        ----------------------------------------------------------------------------------------------------------------------------
+
+        17. Simple tag with body 
+            a - However whatever we write in simple tag's body gets pasted inside a special buffer called JspFragement by container.
+            b - So if we want to display body of simple tag then we need to access the JspFragement object inside tag handler.
+            c - We access JspFragement object using getJspBody() , and then we can execute it using invoke() of JspFragement.
